@@ -8,4 +8,5 @@ done
 unset file
 
 code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
-#ßsource dnvm.sh
+
+source /usr/local/lib/dnx/bin/dnvm.sh
