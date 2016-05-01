@@ -7,6 +7,4 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 done
 unset file
 
-code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
-
 source /usr/local/lib/dnx/bin/dnvm.sh
