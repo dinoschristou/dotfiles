@@ -8,3 +8,4 @@ done
 unset file
 
 source /usr/local/lib/dnx/bin/dnvm.sh
+eval $(/usr/libexec/path_helper -s)
