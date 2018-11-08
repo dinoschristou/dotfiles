@@ -1,5 +1,7 @@
 PATH=/usr/local/share/npm/bin:$PATH
 PATH=/usr/local/smlnj/bin:$PATH
 PATH=/usr/local/bin:$PATH
+PATH="/usr/local/opt/python/libexec/bin:$PATH"
 PATH=$HOME/bin:$PATH
+PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
 export PATH
