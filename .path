@@ -4,4 +4,6 @@ PATH=/usr/local/bin:$PATH
 PATH="/usr/local/opt/python/libexec/bin:$PATH"
 PATH=$HOME/bin:$PATH
 PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
+PATH="/anaconda3/bin:$PATH"
+PATH="/Users/dinos/anaconda3/bin:$PATH"
 export PATH
