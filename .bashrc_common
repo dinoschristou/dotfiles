@@ -1,0 +1,26 @@
+# Bash settings common to linux and osx
+
+# Reminder 
+# When bash starts as a login shell it tries to read
+# .bash_profile, failing that .bash_login, failing that .profile
+# When bash starts as an interactive shell it reads .bashrc
+for file in ~/.{path,bash_prompt,aliases}; do
+  [ -r "$file" ] && source "$file"
+done
+unset file
+
+# Bring in OS specific stuff
+case $OSTYPE in
+    darwin*)
+      [ -r ~/.bash_osx ] && . ~/.bash_osx
+    ;;
+    linux*)
+      [ -r ~/.bash_linux ] && . ~/.bash_linux
+    ;;
+esac
+
+# Bring in work specific file if its there
+[ -r ~/.bash_work ] && . ~/.bash_work
+
+# Bring in host level overrides file if its there
+[ -r ~/.bash_host ] && . ~/.bash_host
