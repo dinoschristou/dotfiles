@@ -1,9 +1,0 @@
-# Stop OSX nagging about ZSH
-export BASH_SILENCE_DEPRECATION_WARNING=1
-
-# eval "$(/opt/homebrew/bin/brew shellenv)"
-# export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
-# export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
-export KUBECONFIG=/Users/dinos/kubeconfig
-
-export GOPATH=/Users/dinos/go

@@ -1,10 +1,4 @@
-# Bash settings common to linux and osx
-
-# Reminder 
-# When bash starts as a login shell it tries to read
-# .bash_profile, failing that .bash_login, failing that .profile
-# When bash starts as an interactive shell it reads .bashrc
-for file in ~/.{path,bash_prompt,aliases}; do
+for file in ~/.{path,aliases}; do
   [ -r "$file" ] && source "$file"
 done
 unset file
@@ -24,5 +18,3 @@ esac
 
 # Bring in host level overrides file if its there
 [ -r ~/.host_shell ] && . ~/.host_shell
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
