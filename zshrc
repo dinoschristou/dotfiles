@@ -19,7 +19,7 @@ esac
 # Temporary prompt setup
 
 # Colourful prompt
-PROMPT='%(?.%F{green}√.%F{red}?%?)%f %B%F{240}%1~%f%b %# '
+PROMPT='%(?.%F{green}√.%F{red}?%?)%f %m %B%F{240}%1~%f%b %# '
 
 # Git status on right prompt
 autoload -Uz vcs_info
