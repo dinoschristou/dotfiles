@@ -1,3 +1,5 @@
+autoload -Uz compinit
+
 for file in ~/.{path,aliases}; do
   [ -r "$file" ] && source "$file"
 done
