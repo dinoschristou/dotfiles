@@ -1,4 +1,5 @@
 autoload -Uz compinit
+compinit
 
 for file in ~/.{path,aliases}; do
   [ -r "$file" ] && source "$file"
