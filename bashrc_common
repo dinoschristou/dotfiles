@@ -26,3 +26,5 @@ esac
 [ -r ~/.host_shell ] && . ~/.host_shell
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+[ -r ~/.cargo/env ] && . ~/.cargo/env

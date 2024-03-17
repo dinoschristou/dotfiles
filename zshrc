@@ -40,6 +40,9 @@ SAVEHIST=50000
 # Bring in host level overrides file if its there
 [ -r ~/.host_shell ] && . ~/.host_shell
 
+# Rust setup
+[ -r ~/.cargo/env ] && . ~/.cargo/env
+
 # Temporary prompt setup
 
 # Colourful prompt

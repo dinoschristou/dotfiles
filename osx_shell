@@ -12,10 +12,15 @@ export PATH="~/go/bin:$PATH"
 export KUBECONFIG=/Users/dinos/kubeconfig
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
+eval "$(direnv hook zsh)"
+
 export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
 export GOPATH=/Users/dinos/go
-export KUBECONFIG=/Users/dinos/kubeconfig
+#export KUBECONFIG=$(find ~/.kube/clusters -type f | sed ':a;N;s/\n/:/;ba')
 export KUBECONFIG=~/.kube/config
+export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
+
+eval "$(op completion zsh)"; compdef _op op
 
 if type brew &>/dev/null
 then
