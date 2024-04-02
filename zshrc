@@ -34,6 +34,13 @@ HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
 
+
+bindkey '^[[3~' delete-char
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+
 # Bring in work specific file if its there
 [ -r ~/.work_shell ] && . ~/.work_shell
 
