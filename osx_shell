@@ -22,6 +22,8 @@ export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
 
 eval "$(op completion zsh)"; compdef _op op
 
+alias tailscale=/Applications/Tailscale.app/Contents/MacOS/Tailscale 
+
 if type brew &>/dev/null
 then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
