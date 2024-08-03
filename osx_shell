@@ -31,3 +31,4 @@ then
   autoload -Uz compinit
   compinit
 fi
+alias promload2="curl -L -X POST prometheus.dr.knxcloud.io/-/reload"
