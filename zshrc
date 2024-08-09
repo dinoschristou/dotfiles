@@ -10,12 +10,33 @@ unset file
 case $OSTYPE in
     darwin*)
       [ -r ~/.osx_shell ] && . ~/.osx_shell
+      alias tailscale=/Applications/Tailscale.app/Contents/MacOS/Tailscale
+
+      # Homebrew
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+      export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
+      export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
+      [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+
+      # iterm config
+      [ -f ~/.iterm2_shell_integration.zsh ] && . ~/.iterm2_shell_integration.zsh
     ;;
     linux*)
       [ -r ~/.linux_shell ] && . ~/.linux_shell
     ;;
 esac
 
+# Go bits
+export PATH="~/go/bin:$PATH"
+
+# Homeserver stuff 
+export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
+export KUBECONFIG=~/.kube/config
+alias promload2="curl -L -X POST prometheus.dr.knxcloud.io/-/reload"
+
+# The next line updates PATH for the Google Cloud SDK.
+[ -f ~/bin/google-cloud-sdk/path.zsh.inc ] && . ~/bin/google-cloud-sdk/path.zsh.inc
+[ -f ~/bin/google-cloud-sdk/completion.zsh.inc ] && . ~/bin/google-cloud-sdk/completion.zsh.inc
 
 # History
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
@@ -44,6 +65,10 @@ bindkey '^[[1;5C' forward-word
 bindkey '^[[1;5D' backward-word
 bindkey  "^[[H"   beginning-of-line
 bindkey  "^[[F"   end-of-line
+
+# Stub for any work specific sc I use at this point in time
+# yet another source control
+prompt_yasc()
 
 # Bring in work specific file if its there
 [ -r ~/.work_shell ] && . ~/.work_shell
@@ -74,8 +99,25 @@ zstyle ':vcs_info:*' enable git
 # Setup fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# zsh autosuggestions - depends where I remembered to put it
+[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && . ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# 1password
+if type op &>/dev/null
+then
+  eval "$(op completion zsh)"
+  compdef _op op
+fi
+
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi

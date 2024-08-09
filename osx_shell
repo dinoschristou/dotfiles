@@ -1,34 +1,4 @@
-# Stop OSX nagging about ZSH
-export BASH_SILENCE_DEPRECATION_WARNING=1
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH="/opt/homebrew/opt/sqlite/bin:$PATH"
-export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
-export PATH="~/go/bin:$PATH"
-#macports
-#export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-#export MANPATH=/opt/local/share/man:$MANPATH
 
-export KUBECONFIG=/Users/dinos/kubeconfig
-[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
-eval "$(direnv hook zsh)"
 
-export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
-export GOPATH=/Users/dinos/go
-#export KUBECONFIG=$(find ~/.kube/clusters -type f | sed ':a;N;s/\n/:/;ba')
-export KUBECONFIG=~/.kube/config
-export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
-
-eval "$(op completion zsh)"; compdef _op op
-
-alias tailscale=/Applications/Tailscale.app/Contents/MacOS/Tailscale 
-
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-  autoload -Uz compinit
-  compinit
-fi
-alias promload2="curl -L -X POST prometheus.dr.knxcloud.io/-/reload"
