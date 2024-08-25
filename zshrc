@@ -20,11 +20,17 @@ case $OSTYPE in
       export PATH="/opt/homebrew/opt/openssl@1.1/bin:$PATH"
       [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
+      [ -r /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && . '/opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
+      [ -r /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh ] && . '/opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
+      
       # iterm config
       [ -f ~/.iterm2_shell_integration.zsh ] && . ~/.iterm2_shell_integration.zsh
     ;;
     linux*)
       [ -r ~/.linux_shell ] && . ~/.linux_shell
+
+      [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+      [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && . ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
     ;;
 esac
 ################################################################################################
@@ -168,19 +174,12 @@ zstyle ':vcs_info:*' enable git
 ################################################################################################
 ## fzf
 ################################################################################################
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if type fzf &>/dev/null
+then
+  source <(fzf --zsh)
+fi
 ################################################################################################
 ## End of fzf
-################################################################################################
-
-################################################################################################
-## ZSH Autosuggestions
-################################################################################################
-## zsh autosuggestions - depends where I remembered to put it
-[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-[ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ] && . ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-################################################################################################
-## End of ZSH Autosuggestions
 ################################################################################################
 
 ################################################################################################
