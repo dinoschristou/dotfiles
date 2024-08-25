@@ -1,5 +1,5 @@
 [user]
-  name = Dinos
+  name = Dinos Christou
   email = dinos.christou@gmail.com
 [init]
   defaultBranch = main  
@@ -8,10 +8,6 @@
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
-[gpg]
-  format = ssh
-[commit]
-  gpgsign = true
 [pull]
   rebase = true
 [alias]
