@@ -60,7 +60,7 @@ export PATH="~/go/bin:$PATH"
 ################################################################################################
 export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
 export KUBECONFIG=~/.kube/config
-alias promload2="curl -L -X POST prometheus.dr.knxcloud.io/-/reload"
+alias promload2="curl -L -X POST prometheus.main.knxcloud.io/-/reload"
 alias k=kubectl
 ################################################################################################
 ## End of Homeserver stuff
