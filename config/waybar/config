@@ -1,78 +1,70 @@
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    // "width": 1280, // Waybar width
-    // Choose the order of the modules
-    "modules-left": ["sway/workspaces"],
-    // "modules-center": ["custom/music"],
-    "modules-right": ["pulseaudio", "backlight", "battery", "clock", "tray", "custom/lock", "custom/power"],
+    "layer": "top", 
+    "position": "top", 
+    "modules-left": ["sway/workspaces" , "sway/mode", "sway/scratchpad"],
+    "modules-right": [ "tray", "cpu", "memory", "temperature", "bluetooth", "clock"],
     "sway/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "format": "{name}: {icon}",
-        "format-icons": {
-            "1": "",
-            "2": "",
-            "3": "",
-            "4": "",
-            "5": "",
-            "urgent": "",
-            "focused": "",
-            "default": ""
-        }
+        "disable-scroll": false,
+        "all-outputs": false,
+        "format": "{value}",
+        "alphabetical_sort": true,
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "sway/scratchpad": {
+        "format": "{icon} {count}",
+        "show-empty": false,
+        "format-icons": ["", ""],
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
     },
     "tray": {
         "icon-size": 21,
         "spacing": 10
     },
-    // "custom/music": {
-    //     "format": "  {}",
-    //     "escape": true,
-    //     "interval": 5,
-    //     "tooltip": false,
-    //     "exec": "playerctl metadata --format='{{ title }}'",
-    //     "on-click": "playerctl play-pause",
-    //     "max-length": 50
-    // },
     "clock": {
         "timezone": "Europe/London",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": " {:%d/%m/%Y}",
-        "format": " {:%H:%M}"
+        "format-alt": "{:%d/%m/%Y}",
+        "format": "{:%H:%M}"
     },
-    "backlight": {
-        "device": "intel_backlight",
-        "format": "{icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
+    "cpu": {
+        "format": "{usage}% ",
+        "tooltip": false
     },
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon}",
-        "format-charging": "",
-        "format-plugged": "",
-        "format-alt": "{icon}",
-        "format-icons": ["", "",  "", "", "", "", "", "", "", "", "", ""]
+    "memory": {
+        "format": "{}% "
     },
-    "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{icon} {volume}%",
-        "format-muted": "",
-        "format-icons": {
-            "default": ["", "", " "]
-        },
-        "on-click": "pavucontrol"
+    "temperature": {
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""]
     },
-    "custom/lock": {
-        "tooltip": false,
-        "on-click": "sh -c '(sleep 0.5s; swaylock --grace 0)' & disown",
-        "format": "",
+    "bluetooth": {
+        "format": "<big></big> {status}",
+        "format-connected": "<big></big> {device_alias}",
+        "format-connected-battery": "<big></big>{device_battery_percentage}%󰥉 {device_alias}",
+        "format-off": "{status}",
+        "format-disabled": "{status}",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-connected-battery": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_battery_percentage}%󰥉 {device_alias}\t{device_address}",
+
+        "on-click": "blueman-manager",
+        "on-click-middle": "bluedevil-sendfile",
+        "on-click-right": "bluedevil-wizard",
+        "on-scroll-up": "bluetoothctl power on",
+        "on-scroll-down": "bluetoothctl power off"
     },
-    "custom/power": {
-        "tooltip": false,
-        "on-click": "wlogout &",
-        "format": ""
+    "network": {
+        "format-wifi": "{essid} ({signalStrength}%) ",
+        "format-ethernet": "{ipaddr}/{cidr}",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "Disconnected ⚠",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
     }
 }
