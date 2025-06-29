@@ -1,0 +1,68 @@
+# Font packages for optimal terminal and desktop experience
+
+nerd_fonts:
+  # Essential Nerd Fonts - naming varies significantly by platform
+  fira-code:
+    macos: font-fira-code-nerd-font
+    ubuntu: fonts-firacode
+    debian: fonts-firacode  
+    arch: ttf-firacode-nerd
+    fedora: fira-code-fonts
+    
+  jetbrains-mono:
+    macos: font-jetbrains-mono-nerd-font
+    ubuntu: fonts-jetbrains-mono  # May need external repo
+    debian: fonts-jetbrains-mono  # May need external repo
+    arch: ttf-jetbrains-mono-nerd
+    fedora: jetbrains-mono-fonts
+    
+  hack:
+    macos: font-hack-nerd-font
+    ubuntu: fonts-hack
+    debian: fonts-hack
+    arch: ttf-hack
+    fedora: hack-fonts
+
+system_fonts:
+  # Standard system fonts
+  liberation:
+    macos: font-liberation
+    ubuntu: fonts-liberation
+    debian: fonts-liberation
+    arch: ttf-liberation
+    fedora: liberation-fonts
+    
+  dejavu:
+    macos: font-dejavu
+    ubuntu: fonts-dejavu
+    debian: fonts-dejavu
+    arch: ttf-dejavu
+    fedora: dejavu-fonts
+    
+  noto:
+    macos: font-noto
+    ubuntu: fonts-noto
+    debian: fonts-noto
+    arch: noto-fonts
+    fedora: google-noto-fonts
+    
+  source-code-pro:
+    macos: font-source-code-pro
+    ubuntu: fonts-source-code-pro
+    debian: fonts-source-code-pro
+    arch: adobe-source-code-pro-fonts
+    fedora: adobe-source-code-pro-fonts
+    
+  opensans:
+    macos: font-open-sans
+    ubuntu: fonts-opensans
+    debian: fonts-opensans
+    arch: ttf-opensans
+    fedora: opensans-fonts
+
+# Font utilities
+font_tools:
+  # Font cache management
+  fontconfig:
+    macos: []  # Built into system
+    linux: fontconfig

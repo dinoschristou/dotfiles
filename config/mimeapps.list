@@ -1,0 +1,31 @@
+[Default Applications]
+text/plain=nvim.desktop;
+text/x-shellscript=nvim.desktop;
+application/x-shellscript=nvim.desktop;
+text/x-python=nvim.desktop;
+application/x-python-code=nvim.desktop;
+text/x-markdown=nvim.desktop;
+text/markdown=nvim.desktop;
+application/json=nvim.desktop;
+application/x-yaml=nvim.desktop;
+text/x-yaml=nvim.desktop;
+application/xml=nvim.desktop;
+text/xml=nvim.desktop;
+text/html=nvim.desktop;
+application/xhtml+xml=nvim.desktop;
+text/css=nvim.desktop;
+text/javascript=nvim.desktop;
+application/javascript=nvim.desktop;
+application/x-desktop=nvim.desktop;
+application/x-wine-extension-ini=nvim.desktop;
+
+[Added Associations]
+text/plain=nvim.desktop;
+application/x-shellscript=nvim.desktop;
+text/x-python=nvim.desktop;
+text/x-markdown=nvim.desktop;
+application/json=nvim.desktop;
+application/x-yaml=nvim.desktop;
+
+# MIME type associations for development workflow
+# Catppuccin Macchiato themed applications preferred

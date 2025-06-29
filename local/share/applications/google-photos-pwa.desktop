@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Google Photos
+Comment=Google Photos web application
+Icon=camera-photo
+Exec=google-chrome --app=https://photos.google.com --class=photos-pwa
+Categories=Graphics;Photography;
+StartupNotify=true
+Terminal=false
+StartupWMClass=photos-pwa
+
+# Google Photos PWA with Catppuccin Macchiato theming support
+# Requires Chrome/Chromium browser

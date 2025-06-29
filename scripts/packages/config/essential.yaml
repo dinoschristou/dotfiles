@@ -1,0 +1,143 @@
+# Essential packages that should be installed on all systems
+# These are core CLI tools needed for basic functionality
+
+essential:
+  # Version control and download tools
+  git: {}
+  curl: {}
+  wget: {}
+  
+  # GitHub CLI
+  github-cli:
+    macos: gh
+    ubuntu: gh
+    debian: gh
+    arch: github-cli
+    fedora: gh
+  
+  # Archive tools
+  unzip: {}
+  zip: {}
+  tar: {}
+  
+  # Shell and terminal
+  zsh: {}
+  tmux: {}
+  
+  # System utilities for package management
+  software-properties-common:
+    ubuntu: software-properties-common
+    debian: software-properties-common
+    skip_platforms: [macos, arch, fedora]
+    
+  apt-transport-https:
+    ubuntu: apt-transport-https
+    debian: apt-transport-https
+    skip_platforms: [macos, arch, fedora]
+    
+  ca-certificates: {}
+  
+  gnupg:
+    ubuntu: gnupg
+    debian: gnupg
+    arch: gnupg
+    fedora: gnupg2
+    macos: gnupg
+    
+  lsb-release:
+    ubuntu: lsb-release
+    debian: lsb-release
+    fedora: redhat-lsb-core
+    skip_platforms: [macos, arch]
+  
+  # System utilities
+  tree: {}
+  htop: {}
+  btop: {}
+  neofetch: {}
+  
+  fastfetch:
+    # Modern neofetch alternative with better performance
+    ubuntu: fastfetch
+    debian: fastfetch
+    arch: fastfetch
+    fedora: fastfetch
+    macos: fastfetch
+    description: "Fast system information tool"
+  
+  # Modern CLI tools
+  fzf: {}
+  ripgrep: {}
+  jq: {}
+  
+  # Navigation and file tools
+  zoxide: {}
+  
+  # Networking tools
+  tailscale:
+    # Tailscale VPN client and CLI
+    macos: tailscale
+    ubuntu: tailscale
+    debian: tailscale
+    arch: tailscale
+    fedora: tailscale
+  
+  # Modern replacements for traditional tools
+  bat:
+    # Package name varies by platform
+    ubuntu: batcat
+    debian: batcat
+    symlink_as: bat  # Create symlink on Ubuntu/Debian
+    
+  fd:
+    ubuntu: fd-find
+    debian: fd-find 
+    fedora: fd-find
+    symlink_as: fd  # Create symlink on Ubuntu/Debian/Fedora
+    
+  eza:
+    # Note: Some distros still use 'exa'
+    ubuntu: exa
+    debian: exa
+    arch: exa
+    fedora: exa
+    macos: eza
+
+shell_enhancements:
+  zsh-autosuggestions: {}
+  
+  zsh-syntax-highlighting:
+    macos: zsh-fast-syntax-highlighting
+    arch: zsh-fast-syntax-highlighting-git  # AUR package
+    
+completion:
+  bash-completion:
+    # Install bash completion support
+    ubuntu: bash-completion
+    debian: bash-completion
+    arch: bash-completion
+    fedora: bash-completion
+    skip_platforms: [macos]  # Built into system
+
+build_tools:
+  # Basic build tools needed for compilation
+  make: {}
+  
+  # Build essentials - varies significantly by platform
+  build-essential:
+    ubuntu: build-essential
+    debian: build-essential
+    arch: base-devel
+    fedora: 
+      - gcc
+      - gcc-c++
+      - make
+    macos: []  # Xcode command line tools handle this
+  
+  pkg-config:
+    arch: pkgconf
+    fedora: pkgconf-devel
+    
+  autoconf: {}
+  automake: {}
+  libtool: {}

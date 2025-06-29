@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Development Workspace
+Comment=Open development workspace in terminal
+Icon=folder-development
+Exec=kitty -e zsh -c "cd ~/workspace && exec zsh"
+Categories=Development;System;
+StartupNotify=false
+Terminal=false
+
+# Development workspace launcher
+# Uses Kitty terminal with Catppuccin Macchiato theme

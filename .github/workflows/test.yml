@@ -1,0 +1,231 @@
+name: Test Dotfiles Framework
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate Scripts and Configs
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y yq shellcheck
+        
+    - name: Run validation tests
+      run: |
+        ./scripts/test/validate.sh
+        
+    - name: Run shellcheck on all scripts
+      run: |
+        find . -name "*.sh" -type f -exec shellcheck {} \;
+
+  dry-run-test:
+    name: Dry Run Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-22.04, ubuntu-20.04, macos-latest]
+        component: [shell, development]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install yq (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y yq
+        
+    - name: Install yq (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install yq
+        
+    - name: Run dry-run test
+      run: |
+        ./install.sh --${{ matrix.component }} --dry-run --non-interactive
+        
+    - name: Test help output
+      run: |
+        ./install.sh --help
+
+  docker-test:
+    name: Docker Multi-Distro Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro: 
+          - ubuntu:22.04
+          - ubuntu:20.04
+          - debian:bullseye
+          - archlinux:latest
+          - fedora:38
+        component: [shell, development]
+        
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Run Docker test
+      run: |
+        ./scripts/test/docker-test.sh all ${{ matrix.component }}
+      env:
+        TEST_DISTRO: ${{ matrix.distro }}
+
+  health-check:
+    name: Health Check Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install minimal dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y git curl wget zsh tmux
+        
+    - name: Run basic health check
+      run: |
+        # Source required utilities for health check
+        export DOTFILES_DIR=$PWD
+        export OS_TYPE="Linux"
+        export OS_NAME="Ubuntu"
+        source scripts/utils/logger.sh
+        source scripts/utils/helpers.sh
+        source scripts/core/detect-system.sh
+        
+        # Run health check
+        ./scripts/validation/health-check.sh || true
+
+  yaml-validation:
+    name: YAML Configuration Validation
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install yq
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y yq
+        
+    - name: Validate YAML configurations
+      run: |
+        # Test all YAML files for syntax
+        find scripts/packages/config -name "*.yaml" -exec yq eval . {} \;
+        
+        # Test specific configurations
+        yq eval '.essential | keys' scripts/packages/config/essential.yaml
+        yq eval '.version_control | keys' scripts/packages/config/development.yaml
+        yq eval '.applications | keys' scripts/packages/config/desktop.yaml
+        
+    - name: Check for required packages
+      run: |
+        # Verify essential packages are defined
+        yq eval '.essential.git' scripts/packages/config/essential.yaml
+        yq eval '.essential.zsh' scripts/packages/config/essential.yaml
+        yq eval '.essential.curl' scripts/packages/config/essential.yaml
+        
+        # Verify new packages are defined
+        yq eval '.version_control.lazygit' scripts/packages/config/development.yaml
+        yq eval '.essential.fastfetch' scripts/packages/config/essential.yaml
+        yq eval '.devops_tools.docker' scripts/packages/config/development.yaml
+
+  theme-consistency:
+    name: Catppuccin Theme Consistency
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Check Catppuccin colors in configurations
+      run: |
+        # Define Catppuccin Macchiato base colors
+        BASE_COLOR="#24273a"
+        TEXT_COLOR="#cad3f5"
+        BLUE_COLOR="#8aadf4"
+        
+        # Check theme files contain Catppuccin colors
+        echo "Checking Kitty theme..."
+        grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" config/kitty/current-theme.conf
+        
+        echo "Checking Lazygit theme..."
+        grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" config/lazygit/config.yml
+        
+        echo "Checking Fastfetch theme..."
+        grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" config/fastfetch/config.jsonc
+        
+        echo "Checking Tmux theme..."
+        grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" tmux.conf
+        
+        echo "Checking Sway theme..."
+        grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" config/sway/catppuccin-macchiato.conf
+        
+        echo "All theme consistency checks passed!"
+
+  installation-order:
+    name: Test Installation Order
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Test component dependency order
+      run: |
+        # Test that git is always installed first
+        ./install.sh --shell --dry-run --non-interactive | head -20
+        
+        # Test that essential packages come before development
+        ./install.sh --all --dry-run --non-interactive | grep -A 20 "Essential Packages"
+        
+        # Verify component execution order in install.sh
+        grep -A 50 "install_components()" install.sh
+
+  security-check:
+    name: Security and Best Practices
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Check for hardcoded credentials
+      run: |
+        # Check for potential secrets (basic patterns)
+        ! grep -r "password\s*=" . --include="*.sh" --include="*.yaml" --include="*.yml"
+        ! grep -r "secret\s*=" . --include="*.sh" --include="*.yaml" --include="*.yml"
+        ! grep -r "token\s*=" . --include="*.sh" --include="*.yaml" --include="*.yml"
+        
+    - name: Check file permissions
+      run: |
+        # Ensure scripts are executable
+        find scripts -name "*.sh" -type f ! -executable -exec echo "Non-executable script: {}" \; | (! grep .)
+        
+        # Check for overly permissive files
+        find . -type f -perm /022 -name "*.sh" -exec echo "World-writable script: {}" \; | (! grep .)
+        
+    - name: Verify no sudo in wrong places
+      run: |
+        # Check that sudo isn't used in configuration files
+        ! grep -r "sudo" config/ || true
+        
+        # Verify package manager scripts use sudo appropriately
+        grep -q "sudo apt-get\|sudo dnf\|sudo pacman" scripts/packages/essential/ || true

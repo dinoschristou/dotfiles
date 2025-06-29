@@ -1,85 +1,151 @@
-set nocompatible
-syntax on
-set nowrap
-set encoding=utf8
-filetype off "need to turn this off for vundle
+" Vim configuration with Vundle and Catppuccin Macchiato theme
+set nocompatible              " be iMproved, required
+filetype off                  " required
 
+" set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'altercation/vim-colors-solarized' 
-"Plugin 'ervandew/supertab'
-"Plugin 'BufOnly.vim'
-"Plugin 'wesQ3/vim-windowswap'
-"Plugin 'godlygeek/tabular'
-"Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin 'jeetsukumaran/vim-buffergator'
-"Plugin 'gilsondev/searchtasks.vim'
-"Plugin 'tpope/vim-dispatch'
-"Plugin 'honza/vim-snippets'
-"Plugin 'Townk/vim-autoclose'
-"Plugin 'tomtom/tcomment_vim'
-"Plugin 'tobyS/vmustache'
-"Plugin 'janko-m/vim-test'
-"Plugin 'maksimr/vim-jsbeautify'
-"Plugin 'vim-syntastic/syntastic'
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Catppuccin colorscheme
+Plugin 'catppuccin/vim'
+
+" Essential plugins
+Plugin 'preservim/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-markdown'
-"Plugin 'jtratner/vim-flavored-markdown'
-"Plugin 'LanguageTool'
-"Plugin 'kablamo/vim-git-log'
-"Plugin 'gregsexton/gitv'
-"Plugin 'tpope/vim-fugitive'
-"Plugin 'AnsiEsc.vim'
-"Plugin 'sjl/badwolf'
-"Plugin 'tomasr/molokai'
-"Plugin 'morhetz/gruvbox'
-"Plugin 'zenorocha/dracula-theme', {'rtp': 'vim/'}
-"Plugin 'junegunn/limelight.vim'
-"Plugin 'mkarmona/colorsbox'
-"Plugin 'romainl/Apprentice'
-"Plugin 'Lokaltog/vim-distinguished'
-"Plugin 'chriskempson/base16-vim'
-"Plugin 'w0ng/vim-hybrid'
-"Plugin 'AlessandroYorba/Sierra'
-"Plugin 'daylerees/colour-schemes'
-"Plugin 'effkay/argonaut.vim'
-"Plugin 'ajh17/Spacegray.vim'
-"Plugin 'atelierbram/Base2Tone-vim'
-"Plugin 'colepeters/spacemacs-theme.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'dense-analysis/ale'
+Plugin 'Yggdroot/indentLine'
+Plugin 'jiangmiao/auto-pairs'
 
-
+" All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-set number
-set ruler
-set backspace=indent,eol,start
 
-set laststatus=2
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+" General settings
+set number                    " Show line numbers
+set relativenumber           " Show relative line numbers
+set cursorline              " Highlight current line
+set showcmd                 " Show command in bottom bar
+set wildmenu                " Visual autocomplete for command menu
+set showmatch               " Highlight matching parentheses
+set incsearch               " Search as characters are entered
+set hlsearch                " Highlight matches
+set ignorecase              " Case insensitive search
+set smartcase               " But case sensitive when uppercase present
+set autoindent              " Auto indent
+set smartindent             " Smart indent
+set expandtab               " Use spaces instead of tabs
+set shiftwidth=4            " Number of spaces to use for autoindent
+set tabstop=4               " Number of visual spaces per TAB
+set softtabstop=4           " Number of spaces in tab when editing
+set wrap                    " Wrap lines
+set linebreak               " Break lines at word boundaries
+set scrolloff=8             " Keep 8 lines above/below cursor
+set sidescrolloff=8         " Keep 8 columns left/right of cursor
+set backspace=indent,eol,start " Allow backspace in insert mode
+set hidden                  " Allow hidden buffers
+set history=1000            " Remember more commands
+set undolevels=1000         " More undo levels
+set visualbell              " No beeping
+set noerrorbells            " No error bells
+set t_vb=                   " No visual bell
+set mouse=a                 " Enable mouse support
+set clipboard=unnamed       " Use system clipboard
+set encoding=utf-8          " UTF-8 encoding
+set fileencoding=utf-8      " UTF-8 file encoding
+set ruler                   " Show cursor position
+set laststatus=2            " Always show status line
 
-" fold lines based on identation
+" Color scheme and appearance
+if (has("termguicolors"))
+  set termguicolors
+endif
+set background=dark
+colorscheme catppuccin_macchiato
+
+" Airline theme
+let g:airline_theme = 'catppuccin_macchiato'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+" Status line (fallback if airline is not available)
+if !exists('g:loaded_airline')
+    set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+endif
+
+" NERDTree settings
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
+let NERDTreeIgnore=['\.pyc$', '\~$', '\.git$', '__pycache__', 'node_modules']
+
+" FZF settings
+if executable('fzf')
+    map <C-p> :Files<CR>
+    map <C-f> :Rg<CR>
+endif
+
+" Git gutter settings
+let g:gitgutter_enabled = 1
+let g:gitgutter_map_keys = 0
+
+" ALE settings
+let g:ale_linters = {
+\   'python': ['flake8', 'pylint'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint', 'tslint'],
+\   'rust': ['cargo'],
+\   'go': ['golint', 'go vet'],
+\}
+let g:ale_fixers = {
+\   'python': ['black', 'isort'],
+\   'javascript': ['prettier', 'eslint'],
+\   'typescript': ['prettier', 'eslint'],
+\   'rust': ['rustfmt'],
+\   'go': ['gofmt'],
+\}
+let g:ale_fix_on_save = 1
+
+" IndentLine settings
+let g:indentLine_char = '│'
+let g:indentLine_enabled = 1
+
+" Folding settings
 set foldmethod=indent
-
-" default to all lines unfolded
 set foldlevel=99
 
-" use spaces not tabs
-set softtabstop=4
-set shiftwidth=4
-set expandtab
-set autoindent
+" Key mappings
+let mapleader = " "
 
+" Window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
-let mapleader=","
-" ,o open a new file
-nnoremap <Leader>o :CtrlP<CR>
+" Buffer navigation
+nnoremap <leader>bn :bnext<CR>
+nnoremap <leader>bp :bprevious<CR>
+nnoremap <leader>bd :bdelete<CR>
 
-" ,w save current file
-nnoremap <Leader>w :w<CR>
+" Clear search highlighting
+nnoremap <leader>/ :nohlsearch<CR>
 
-" copy and paste
+" Save and quit shortcuts
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>wq :wq<CR>
+
+" Copy and paste with system clipboard
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
@@ -87,30 +153,24 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
-" ,, enters visual mode
+" Enter visual mode
 nmap <Leader><Leader> V
 
+" Toggle paste mode
+set pastetoggle=<F2>
 
-if (has("termguicolors"))
-  set termguicolors
-endif
+" Quick edit vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
-let base16colorspace=256  " Access colors present in 256 colorspace
-set background=dark
-" colorscheme solarized
+" File type specific settings
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType javascript,typescript,json,html,css,yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType go setlocal noexpandtab shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType rust setlocal shiftwidth=4 tabstop=4 softtabstop=4
 
 " Markdown syntax highlighting
 augroup markdown
     au!
     au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
-
-
-" Enable omni completion.
-"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-"autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-map <C-n> :NERDTreeToggle<CR>

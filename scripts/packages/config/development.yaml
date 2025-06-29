@@ -1,0 +1,153 @@
+# Development tools and programming language support
+
+editors:
+  neovim: {}
+  vim: {}
+
+version_control:
+  git-delta: {}
+  
+  gh:
+    # GitHub CLI installation varies by platform
+    ubuntu: github-cli  # Via external repo
+    debian: github-cli  # Via external repo
+    manual_install: true  # Requires special setup
+    
+  pre-commit: {}
+  
+  lazygit:
+    # Terminal UI for Git operations
+    ubuntu: lazygit
+    debian: lazygit
+    arch: lazygit
+    fedora: lazygit
+    macos: lazygit
+    description: "Simple terminal UI for git commands"
+
+devops_tools:
+  # Configuration management
+  ansible: {}
+  
+  # Static site generator
+  hugo: {}
+  
+  # Network analysis
+  wireshark:
+    # GUI application for network protocol analysis
+    ubuntu: wireshark
+    debian: wireshark
+    arch: wireshark-qt
+    fedora: wireshark
+    macos: wireshark
+    
+  # Python package manager
+  uv:
+    # Modern Python package and project manager
+    install_method: pip  # pip install uv
+    description: "Fast Python package installer and resolver"
+    
+  # Container and virtualization
+  docker:
+    # Container platform
+    ubuntu: docker.io
+    debian: docker.io
+    arch: docker
+    fedora: docker
+    macos: docker
+    install_method: cask  # On macOS use Docker Desktop
+    description: "Container platform for development"
+    post_install: add_user_to_docker_group
+
+build_systems:
+  cmake: {}
+  
+development_libraries:
+  # SSL/TLS libraries
+  openssl-dev:
+    ubuntu: libssl-dev
+    debian: libssl-dev
+    arch: openssl
+    fedora: openssl-devel
+    macos: openssl
+    
+  # FFI libraries  
+  ffi-dev:
+    ubuntu: libffi-dev
+    debian: libffi-dev
+    arch: libffi
+    fedora: libffi-devel
+    macos: libffi
+    
+  # Readline libraries
+  readline-dev:
+    ubuntu: libreadline-dev
+    debian: libreadline-dev
+    arch: readline
+    fedora: readline-devel
+    macos: readline
+    
+  # SQLite libraries
+  sqlite-dev:
+    ubuntu: libsqlite3-dev
+    debian: libsqlite3-dev
+    arch: sqlite
+    fedora: sqlite-devel
+    macos: sqlite
+    
+  # XML libraries
+  xml-dev:
+    ubuntu: libxml2-dev
+    debian: libxml2-dev
+    arch: libxml2
+    fedora: libxml2-devel
+    macos: libxml2
+    
+  xslt-dev:
+    ubuntu: libxslt1-dev
+    debian: libxslt1-dev
+    arch: libxslt
+    fedora: libxslt-devel
+    macos: libxslt
+    
+  # Compression libraries
+  bz2-dev:
+    ubuntu: libbz2-dev
+    debian: libbz2-dev
+    arch: bzip2
+    fedora: bzip2-devel
+    macos: bzip2
+
+compilers:
+  # LLVM and Clang
+  llvm: {}
+  
+  clang:
+    ubuntu: clang
+    debian: clang
+    arch: clang
+    fedora: clang
+    macos: llvm  # Includes clang
+    
+  # Note: build-essential is now handled in essential.yaml to avoid duplication
+
+# Language runtimes (installed manually via specialized installers)
+runtimes:
+  python:
+    versions: ["3.11", "3.12"]
+    macos: 
+      - python@3.11
+      - python@3.12
+    linux: 
+      - python3
+      - python3-pip
+      - python3-venv
+      
+  go:
+    install_method: manual  # Downloaded from official site
+    
+  rust:
+    install_method: rustup  # Installed via rustup
+    
+  nodejs:
+    install_method: fnm  # Fast Node Manager
+    default_version: "lts"
