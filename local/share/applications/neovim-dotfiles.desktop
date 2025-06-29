@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Neovim (Dotfiles)
+Comment=Edit dotfiles with Neovim
+Icon=nvim
+Exec=kitty -e nvim ~/.config
+Categories=Development;TextEditor;
+StartupNotify=false
+Terminal=false
+
+# Neovim editor for dotfiles configuration
+# Uses Kitty terminal with Catppuccin Macchiato theme

@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Kitty Terminal
+Comment=Fast, feature-rich, GPU based terminal
+Icon=kitty
+Exec=kitty
+Categories=System;TerminalEmulator;
+StartupNotify=true
+Terminal=false
+MimeType=
+Keywords=terminal;shell;
+
+# Custom themed terminal with modern color scheme
+# This desktop entry ensures Kitty appears properly in application menus
+# with consistent theming across the desktop environment

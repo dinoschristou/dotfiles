@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=WhatsApp
+Comment=WhatsApp web application
+Icon=phone
+Exec=google-chrome --app=https://web.whatsapp.com --class=whatsapp-pwa
+Categories=Network;InstantMessaging;
+StartupNotify=true
+Terminal=false
+StartupWMClass=whatsapp-pwa
+
+# WhatsApp PWA with Catppuccin Macchiato theming support
+# Requires Chrome/Chromium browser

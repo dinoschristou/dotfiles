@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Lazygit
+Comment=Terminal UI for Git commands
+Icon=git
+Exec=kitty -e lazygit
+Categories=Development;RevisionControl;
+StartupNotify=false
+Terminal=false
+MimeType=
+
+# Git UI with Catppuccin Macchiato theming
+# Launches in Kitty terminal for consistent theme integration

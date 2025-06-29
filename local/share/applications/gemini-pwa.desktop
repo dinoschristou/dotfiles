@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Gemini
+Comment=Google Gemini AI web application
+Icon=robot
+Exec=google-chrome --app=https://gemini.google.com --class=gemini-pwa
+Categories=Office;Education;
+StartupNotify=true
+Terminal=false
+StartupWMClass=gemini-pwa
+
+# Google Gemini PWA with Catppuccin Macchiato theming support
+# Requires Chrome/Chromium browser

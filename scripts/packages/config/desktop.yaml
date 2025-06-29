@@ -1,0 +1,235 @@
+# Desktop environment packages (Linux only)
+
+wayland:
+  # Core Wayland support
+  wayland-protocols:
+    ubuntu: wayland-protocols
+    debian: wayland-protocols
+    arch: wayland-protocols
+    fedora: wayland-protocols-devel
+    
+  wayland-dev:
+    ubuntu: libwayland-dev
+    debian: libwayland-dev  
+    arch: wayland
+    fedora: wayland-devel
+    
+  xwayland:
+    ubuntu: xwayland
+    debian: xwayland
+    arch: xorg-xwayland
+    fedora: xorg-x11-server-Xwayland
+
+window_managers:
+  # Hyprland (may need special installation)
+  hyprland:
+    arch: hyprland
+    fedora: hyprland  # Via COPR
+    ubuntu: []  # Manual installation required
+    debian: []  # Manual installation required
+    install_method: manual
+    
+  # Hyprland ecosystem
+  hyprlock:
+    arch: hyprlock
+    fedora: hyprlock  # Via COPR
+    ubuntu: []  # Manual installation required
+    debian: []  # Manual installation required
+    install_method: manual
+    
+  hypridle:
+    arch: hypridle
+    fedora: hypridle  # Via COPR
+    ubuntu: []  # Manual installation required
+    debian: []  # Manual installation required
+    install_method: manual
+    
+  # Sway ecosystem
+  sway: {}
+  swaylock: {}
+  swayidle: {}
+  swaybg: {}
+
+desktop_tools:
+  # Status bar and launcher
+  waybar: {}
+  
+  wofi: {}
+    
+  # Notifications
+  mako: {}
+  
+  # Screenshot tools
+  grim: {}
+  slurp: {}
+  
+  # Clipboard
+  wl-clipboard: {}
+
+audio:
+  # Modern audio stack
+  pipewire: {}
+  
+  pipewire-pulse:
+    ubuntu: pipewire-pulse
+    debian: pipewire-pulse
+    arch: pipewire-pulse
+    fedora: pipewire-pulseaudio
+    
+  wireplumber:
+    # Not available on all systems
+    skip_platforms: [ubuntu, debian]
+    
+  # Audio controls
+  pavucontrol: {}
+  alsa-utils: {}
+
+applications:
+  # Terminal emulator
+  kitty: {}
+  
+  # Web browser
+  firefox:
+    debian: firefox-esr  # Debian uses ESR
+    
+  # Media player
+  vlc: {}
+  
+  # File manager
+  nautilus:
+    arch: thunar  # Use thunar on Arch
+    fedora: thunar  # Use thunar on Fedora
+    
+  # Media controls
+  playerctl: {}
+  
+  # Brightness control
+  brightnessctl: {}
+  
+  # Image viewer
+  imv:
+    # Lightweight Wayland image viewer
+    ubuntu: imv
+    debian: imv
+    arch: imv
+    fedora: imv
+    skip_platforms: [macos]  # macOS has built-in Preview
+    description: "Wayland-native image viewer"
+    
+  # Bluetooth manager
+  blueberry:
+    # Bluetooth configuration tool
+    ubuntu: blueberry
+    debian: blueberry
+    arch: blueberry
+    fedora: blueberry
+    skip_platforms: [macos]  # macOS has built-in Bluetooth
+    description: "Bluetooth device manager"
+  
+  # Programming languages for desktop integration
+  python3:
+    macos: []  # Handled by development packages
+    
+  python3-pip:
+    macos: []  # Handled by development packages
+
+# Third-party applications (require manual installation)
+third_party:
+  google-chrome:
+    install_method: manual
+    description: "Web browser"
+    
+  1password:
+    install_method: manual  
+    description: "Password manager"
+    packages:
+      - 1password
+      - 1password-cli
+      
+  obsidian:
+    install_method: manual
+    description: "Note-taking application"
+    
+  vscode:
+    install_method: manual
+    description: "Visual Studio Code editor"
+    packages:
+      - code
+      
+  typora:
+    install_method: manual
+    description: "WYSIWYG Markdown editor"
+    
+  xournalpp:
+    install_method: manual
+    description: "Note-taking and PDF annotation tool"
+    ubuntu: xournalpp
+    debian: xournalpp
+    arch: xournalpp
+    fedora: xournalpp
+    skip_platforms: [macos]  # Use alternative on macOS
+
+# macOS-specific applications (installed as casks)
+macos_apps:
+  # Window management
+  rectangle:
+    macos: rectangle
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Window management utility"
+    
+  # Development tools
+  visual-studio-code:
+    macos: visual-studio-code
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Code editor"
+    
+  # Browsers and productivity
+  google-chrome:
+    macos: google-chrome
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Web browser"
+    
+  # Media and utilities
+  vlc:
+    macos: vlc
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Media player"
+    
+  obsidian:
+    macos: obsidian
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Note-taking application"
+    
+  # Security and networking
+  1password:
+    macos: 1password
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Password manager"
+    
+  wireshark:
+    macos: wireshark
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Network protocol analyzer"
+    
+  # Terminal
+  kitty:
+    macos: kitty
+    skip_platforms: [ubuntu, debian, arch, fedora]
+    install_method: cask
+    description: "Terminal emulator"
+
+# Desktop integration utilities
+integration:
+  xdg-utils: {}
+  desktop-file-utils: {}
+  
+  # Portal for screen sharing, etc.
+  xdg-desktop-portal-wlr:
+    skip_platforms: [macos]

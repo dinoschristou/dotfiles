@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Fastfetch
+Comment=System information display tool
+Icon=utilities-system-monitor
+Exec=kitty -e fastfetch
+Categories=System;Monitor;
+StartupNotify=false
+Terminal=false
+NoDisplay=true
+
+# System information tool with Catppuccin theming
+# Launches in Kitty terminal for consistent theme integration
