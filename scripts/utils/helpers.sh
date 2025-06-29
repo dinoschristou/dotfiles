@@ -18,13 +18,28 @@ is_interactive() {
 # Backup existing file or directory
 backup_file() {
     local file="$1"
-    local backup_dir="$HOME/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
+    
+    # Use a global backup directory for the session to avoid conflicts
+    if [[ -z "$BACKUP_DIR" ]]; then
+        BACKUP_DIR="$HOME/.dotfiles-backup-$(date +%Y%m%d_%H%M%S)"
+    fi
     
     if [[ -e "$file" ]]; then
         log_info "Backing up existing $file"
-        mkdir -p "$backup_dir"
-        mv "$file" "$backup_dir/"
-        log_success "Backed up to $backup_dir/$(basename "$file")"
+        mkdir -p "$BACKUP_DIR"
+        
+        local basename_file=$(basename "$file")
+        local backup_target="$BACKUP_DIR/$basename_file"
+        
+        # If target already exists in backup, add a suffix
+        local counter=1
+        while [[ -e "$backup_target" ]]; do
+            backup_target="$BACKUP_DIR/${basename_file}.${counter}"
+            counter=$((counter + 1))
+        done
+        
+        mv "$file" "$backup_target"
+        log_success "Backed up to $backup_target"
     fi
 }
 

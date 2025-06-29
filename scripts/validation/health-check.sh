@@ -9,24 +9,30 @@ run_health_check() {
     local warnings=0
 
     # Check shell configuration
-    errors=$((errors + $(check_shell_config)))
+    check_shell_config
+    errors=$((errors + $?))
 
     # Check git configuration
-    errors=$((errors + $(check_git_config)))
+    check_git_config
+    errors=$((errors + $?))
 
     # Check development tools
-    errors=$((errors + $(check_development_tools)))
+    check_development_tools
+    errors=$((errors + $?))
 
     # Check desktop environment (Linux only)
     if [[ "$OS_TYPE" == "Linux" ]]; then
-        errors=$((errors + $(check_desktop_environment)))
+        check_desktop_environment
+        errors=$((errors + $?))
     fi
 
     # Check configuration files
-    errors=$((errors + $(check_configuration_files)))
+    check_configuration_files
+    errors=$((errors + $?))
 
     # Check fonts
-    warnings=$((warnings + $(check_fonts)))
+    check_fonts
+    warnings=$((warnings + $?))
 
     # Summary
     show_health_summary $errors $warnings
@@ -78,7 +84,7 @@ check_shell_config() {
         fi
     fi
 
-    # Check shell plugins
+    # Check shell plugins (this doesn't return errors, just logs)
     check_shell_plugins
 
     return $errors
@@ -89,7 +95,8 @@ check_shell_plugins() {
 
     case "$OS_NAME" in
         "Darwin")
-            # Check Homebrew-installed plugins
+            # Check Homebrew-installed plugins (disable set -e temporarily)
+            set +e
             if brew list zsh-autosuggestions &>/dev/null; then
                 log_success "zsh-autosuggestions installed"
             else
@@ -101,6 +108,7 @@ check_shell_plugins() {
             else
                 log_warn "zsh-fast-syntax-highlighting not found"
             fi
+            set -e
             ;;
         *)
             # Check package manager installed plugins
@@ -283,8 +291,8 @@ check_neovim_health() {
     health_output=$(nvim --headless -c "checkhealth" -c "qa" 2>&1)
 
     if echo "$health_output" | grep -qi "error"; then
-        log_warn "Neovim health check found errors"
-        log_info "Run ':checkhealth' in Neovim for details"
+        log_warn "Neovim health check found some issues"
+        log_info "Run ':checkhealth' in Neovim to see details"
     else
         log_success "Neovim health check passed"
     fi

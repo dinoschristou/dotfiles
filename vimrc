@@ -71,12 +71,31 @@ if (has("termguicolors"))
   set termguicolors
 endif
 set background=dark
-colorscheme catppuccin_macchiato
 
-" Airline theme
-let g:airline_theme = 'catppuccin_macchiato'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+" Try to set catppuccin_macchiato colorscheme with fallback
+try
+  colorscheme catppuccin_macchiato
+catch /^Vim\%((\a\+)\)\=:E185/
+  " Catppuccin not available, use fallback
+  try
+    colorscheme desert
+  catch /^Vim\%((\a\+)\)\=:E185/
+    " Use default if nothing else works
+    colorscheme default
+  endtry
+endtry
+
+" Airline theme with fallback
+if exists('g:loaded_airline')
+  try
+    let g:airline_theme = 'catppuccin_macchiato'
+  catch
+    " Fallback to a default theme if catppuccin is not available
+    let g:airline_theme = 'dark'
+  endtry
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline_powerline_fonts = 1
+endif
 
 " Status line (fallback if airline is not available)
 if !exists('g:loaded_airline')

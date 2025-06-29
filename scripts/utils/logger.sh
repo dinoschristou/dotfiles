@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Prevent multiple sourcing
+if [[ -n "$LOGGER_LOADED" ]]; then
+    return 0
+fi
+readonly LOGGER_LOADED=1
+
 # Colors for output
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'

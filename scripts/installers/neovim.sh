@@ -184,10 +184,24 @@ ensure_python_support() {
     # Install Python provider for Neovim
     if command_exists "pip3"; then
         log_info "Installing Python provider for Neovim..."
-        pip3 install --user pynvim
+        # Handle macOS externally-managed environment
+        if [[ "$OS_NAME" == "Darwin" ]]; then
+            pip3 install --user --break-system-packages pynvim 2>/dev/null || {
+                log_warn "Failed to install pynvim via pip, trying pipx..."
+                if command_exists "pipx" || brew install pipx; then
+                    pipx install pynvim || log_warn "Failed to install pynvim via pipx"
+                fi
+            }
+        else
+            pip3 install --user pynvim
+        fi
     elif command_exists "pip"; then
         log_info "Installing Python provider for Neovim..."
-        pip install --user pynvim
+        if [[ "$OS_NAME" == "Darwin" ]]; then
+            pip install --user --break-system-packages pynvim 2>/dev/null || log_warn "Failed to install pynvim"
+        else
+            pip install --user pynvim
+        fi
     else
         log_warn "pip not found, skipping Python provider installation"
     fi

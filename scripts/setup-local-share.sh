@@ -4,13 +4,15 @@
 
 set -e
 
-# Get script directory
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DOTFILES_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+# Get script directory (local scope to avoid overriding main SCRIPT_DIR)
+LOCAL_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -z "$DOTFILES_DIR" ]]; then
+    DOTFILES_DIR="$(cd "$LOCAL_SCRIPT_DIR/.." && pwd)"
+fi
 
-# Source utilities
-source "$SCRIPT_DIR/utils/logger.sh"
-source "$SCRIPT_DIR/utils/helpers.sh"
+# Source utilities (use local script dir)
+source "$LOCAL_SCRIPT_DIR/utils/logger.sh"
+source "$LOCAL_SCRIPT_DIR/utils/helpers.sh"
 
 # XDG Data directory
 XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"

@@ -59,6 +59,6 @@ install_desktop_applications() {
 
 # Install additional CLI tools (using common function)
 install_additional_cli_tools() {
-    source "$SCRIPT_DIR/utils/common-installers.sh"
+    source "$SCRIPT_DIR/scripts/utils/common-installers.sh"
     install_development_packages "macOS"
 }

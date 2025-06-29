@@ -6,7 +6,7 @@ install_fonts() {
     log_step "Installing fonts"
 
     # Initialize package manager and install from config
-    source "$SCRIPT_DIR/utils/package-manager.sh"
+    source "$SCRIPT_DIR/scripts/utils/package-manager.sh"
     init_package_manager
     
     # Install fonts from centralized configuration

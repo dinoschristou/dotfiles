@@ -60,6 +60,15 @@ deploy_zsh_config() {
     mkdir -p "$HOME/.config/fastfetch"
     create_symlink "$DOTFILES_DIR/config/fastfetch/config.jsonc" "$HOME/.config/fastfetch/config.jsonc"
     
+    # Zsh configuration directory
+    mkdir -p "$HOME/.config/zsh"
+    for config_file in "$DOTFILES_DIR/config/zsh"/*.zsh; do
+        if [[ -f "$config_file" ]]; then
+            local filename=$(basename "$config_file")
+            create_symlink "$config_file" "$HOME/.config/zsh/$filename"
+        fi
+    done
+    
     # Sway wallpaper script (Linux only)
     if [[ "$OS_TYPE" == "Linux" ]]; then
         mkdir -p "$HOME/.config/sway"
@@ -270,8 +279,8 @@ install_vim_plugins() {
     if command_exists "vim" && [[ -f "$HOME/.vimrc" ]]; then
         log_info "Installing Vim plugins..."
         
-        # Install plugins non-interactively
-        vim +PluginInstall +qall &>/dev/null || {
+        # Install plugins non-interactively with timeout
+        timeout 300 vim +PluginInstall +qall >/dev/null 2>&1 || {
             log_warn "Plugin installation may have failed or completed with warnings"
             log_info "You can run ':PluginInstall' manually in Vim to retry"
         }
@@ -354,6 +363,12 @@ update_prompt_config_path() {
     local prompt_config="$XDG_CONFIG_HOME/zsh/prompt.zsh"
     
     if [[ -f "$prompt_config" ]]; then
+        # Skip update if file is a symlink (already managed by dotfiles)
+        if [[ -L "$prompt_config" ]]; then
+            log_info "Prompt configuration is symlinked, skipping path update"
+            return 0
+        fi
+        
         log_info "Updating Powerlevel10k path in prompt configuration..."
         
         # Use a more robust path that works across platforms

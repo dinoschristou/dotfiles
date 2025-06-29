@@ -45,6 +45,7 @@ devops_tools:
     # Modern Python package and project manager
     install_method: pip  # pip install uv
     description: "Fast Python package installer and resolver"
+    skip_platforms: [macos]  # Skip on macOS due to externally-managed environment
     
   # Container and virtualization
   docker:

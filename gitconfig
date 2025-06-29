@@ -30,3 +30,6 @@
   added = yellow
   changed = green
   untracked = cyan
+[user]
+	name = Dinos Christou
+	email = dinos.christou@gmail.com

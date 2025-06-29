@@ -8,6 +8,7 @@ nerd_fonts:
     debian: fonts-firacode  
     arch: ttf-firacode-nerd
     fedora: fira-code-fonts
+    install_method: cask  # Fonts are casks on macOS
     
   jetbrains-mono:
     macos: font-jetbrains-mono-nerd-font
@@ -15,6 +16,7 @@ nerd_fonts:
     debian: fonts-jetbrains-mono  # May need external repo
     arch: ttf-jetbrains-mono-nerd
     fedora: jetbrains-mono-fonts
+    install_method: cask  # Fonts are casks on macOS
     
   hack:
     macos: font-hack-nerd-font
@@ -22,6 +24,7 @@ nerd_fonts:
     debian: fonts-hack
     arch: ttf-hack
     fedora: hack-fonts
+    install_method: cask  # Fonts are casks on macOS
 
 system_fonts:
   # Standard system fonts
@@ -31,6 +34,7 @@ system_fonts:
     debian: fonts-liberation
     arch: ttf-liberation
     fedora: liberation-fonts
+    install_method: cask  # Fonts are casks on macOS
     
   dejavu:
     macos: font-dejavu
@@ -38,13 +42,15 @@ system_fonts:
     debian: fonts-dejavu
     arch: ttf-dejavu
     fedora: dejavu-fonts
+    install_method: cask  # Fonts are casks on macOS
     
   noto:
-    macos: font-noto
+    macos: font-noto-sans
     ubuntu: fonts-noto
     debian: fonts-noto
     arch: noto-fonts
     fedora: google-noto-fonts
+    install_method: cask  # Fonts are casks on macOS
     
   source-code-pro:
     macos: font-source-code-pro
@@ -52,6 +58,7 @@ system_fonts:
     debian: fonts-source-code-pro
     arch: adobe-source-code-pro-fonts
     fedora: adobe-source-code-pro-fonts
+    install_method: cask  # Fonts are casks on macOS
     
   opensans:
     macos: font-open-sans
@@ -59,6 +66,7 @@ system_fonts:
     debian: fonts-opensans
     arch: ttf-opensans
     fedora: opensans-fonts
+    install_method: cask  # Fonts are casks on macOS
 
 # Font utilities
 font_tools:

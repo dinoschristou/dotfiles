@@ -32,8 +32,12 @@ install_programming_languages() {
     # Install Node.js via fnm
     install_nodejs_via_fnm
 
-    # Install Python tools
-    install_python_tools
+    # Install Python tools (disabled on macOS due to externally-managed environment)
+    if [[ "$OS_NAME" != "Darwin" ]]; then
+        install_python_tools
+    else
+        log_info "Skipping Python tools installation on macOS (use pipx manually if needed)"
+    fi
 }
 
 install_go() {
@@ -96,7 +100,7 @@ install_nodejs_via_fnm() {
         log_info "Installing fnm (Fast Node Manager)..."
         
         # Install fnm
-        curl -fsSL https://fnm.vercel.app/install | bash --skip-shell
+        curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
         
         # Source fnm
         export PATH="$HOME/.local/share/fnm:$PATH"
@@ -105,10 +109,10 @@ install_nodejs_via_fnm() {
         # Install latest LTS Node.js
         if command_exists "fnm"; then
             log_info "Installing Node.js LTS via fnm..."
-            fnm install --lts
-            fnm use lts-latest
-            fnm default lts-latest
-            log_success "Node.js LTS installed via fnm"
+            fnm install --lts 2>/dev/null || log_debug "Node.js LTS may already be installed"
+            fnm use lts-latest 2>/dev/null || true
+            fnm default lts-latest 2>/dev/null || true
+            log_success "Node.js LTS configured via fnm"
         fi
     else
         log_debug "fnm already installed"
@@ -140,12 +144,37 @@ install_python_tools() {
     # Install common Python tools
     if command_exists "pip3"; then
         log_info "Installing Python development tools..."
-        pip3 install --user --upgrade pip setuptools wheel
-        pip3 install --user black isort flake8 mypy
+        
+        # Handle macOS externally-managed environment
+        local pip_args="--user"
+        if [[ "$OS_NAME" == "Darwin" ]]; then
+            # Use pipx for tools on macOS to avoid externally-managed environment issues
+            if ! command_exists "pipx"; then
+                log_info "Installing pipx for Python package management..."
+                brew install pipx >/dev/null 2>&1 || true
+            fi
+            
+            if command_exists "pipx"; then
+                log_info "Installing Python tools via pipx..."
+                pipx install black >/dev/null 2>&1 || true
+                pipx install isort >/dev/null 2>&1 || true  
+                pipx install flake8 >/dev/null 2>&1 || true
+                pipx install mypy >/dev/null 2>&1 || true
+                pipx install uv >/dev/null 2>&1 || true
+                log_success "Python development tools installed via pipx"
+                return 0
+            else
+                log_warn "pipx installation failed, falling back to pip with --break-system-packages"
+                pip_args="--user --break-system-packages"
+            fi
+        fi
+        
+        pip3 install $pip_args --upgrade pip setuptools wheel
+        pip3 install $pip_args black isort flake8 mypy
         
         # Install uv - modern Python package manager
         log_info "Installing uv Python package manager..."
-        pip3 install --user uv
+        pip3 install $pip_args uv
     fi
 }
 
@@ -251,7 +280,7 @@ install_terraform() {
         
         case "$OS_NAME" in
             "Darwin")
-                brew tap hashicorp/tap
+                brew tap hashicorp/tap 2>/dev/null || true  # Idempotent - ignore if already tapped
                 brew install hashicorp/tap/terraform
                 ;;
             "Ubuntu"|"Debian")
@@ -283,9 +312,27 @@ install_cloud_clis() {
                 brew install google-cloud-sdk
                 ;;
             *)
-                curl https://sdk.cloud.google.com | bash
+                # Install Google Cloud SDK for Linux
+                curl https://sdk.cloud.google.com | bash -s -- --disable-prompts --install-dir="$HOME" 2>/dev/null || {
+                    log_warn "Google Cloud SDK installation failed, but continuing..."
+                    return 0
+                }
+                
+                # Source the path for immediate use
+                if [[ -f "$HOME/google-cloud-sdk/path.bash.inc" ]]; then
+                    source "$HOME/google-cloud-sdk/path.bash.inc"
+                fi
                 ;;
         esac
+        
+        # Verify installation
+        if command_exists "gcloud"; then
+            log_success "Google Cloud SDK installed successfully"
+        else
+            log_warn "Google Cloud SDK installation may have failed"
+        fi
+    else
+        log_debug "Google Cloud SDK already installed"
     fi
 
     # Note: AWS CLI and Azure CLI can be added here if needed

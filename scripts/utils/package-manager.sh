@@ -70,7 +70,9 @@ get_package_name() {
     
     # Check if there's a platform-specific override
     local platform_override
-    platform_override=$(yq eval ".${category}.${package_key}.${OS_NAME,,}" "$config_file" 2>/dev/null)
+    local os_name_lower
+    os_name_lower=$(echo "$OS_NAME" | tr '[:upper:]' '[:lower:]')
+    platform_override=$(yq eval ".${category}.${package_key}.${os_name_lower}" "$config_file" 2>/dev/null)
     
     if [[ "$platform_override" != "null" && -n "$platform_override" ]]; then
         package_name="$platform_override"
@@ -87,9 +89,11 @@ should_skip_package() {
     
     # Check skip_platforms array
     local skip_platforms
+    local os_name_lower
+    os_name_lower=$(echo "$OS_NAME" | tr '[:upper:]' '[:lower:]')
     skip_platforms=$(yq eval ".${category}.${package_key}.skip_platforms[]" "$config_file" 2>/dev/null)
     
-    if [[ "$skip_platforms" =~ $OS_NAME ]]; then
+    if [[ "$skip_platforms" =~ $os_name_lower ]]; then
         return 0  # Should skip
     fi
     
@@ -267,12 +271,44 @@ install_cask_package() {
         return 0
     fi
     
-    if ! brew list --cask "$cask_name" &>/dev/null; then
-        log_info "Installing cask $cask_name..."
-        brew install --cask "$cask_name"
-    else
+    # Check if already installed via brew
+    if brew list --cask "$cask_name" &>/dev/null; then
         log_debug "Cask $cask_name already installed"
+        return 0
     fi
+    
+    # For fonts, also check if font files already exist to avoid conflicts
+    if [[ "$cask_name" == font-* ]]; then
+        local font_installed=false
+        case "$cask_name" in
+            "font-fira-code-nerd-font")
+                if ls "$HOME/Library/Fonts"/FiraCodeNerdFont* 2>/dev/null || ls "/Library/Fonts"/FiraCodeNerdFont* 2>/dev/null; then
+                    font_installed=true
+                fi
+                ;;
+            "font-jetbrains-mono-nerd-font")
+                if ls "$HOME/Library/Fonts"/JetBrainsMonoNerdFont* 2>/dev/null || ls "/Library/Fonts"/JetBrainsMonoNerdFont* 2>/dev/null; then
+                    font_installed=true
+                fi
+                ;;
+            "font-hack-nerd-font")
+                if ls "$HOME/Library/Fonts"/HackNerdFont* 2>/dev/null || ls "/Library/Fonts"/HackNerdFont* 2>/dev/null; then
+                    font_installed=true
+                fi
+                ;;
+        esac
+        
+        if [[ "$font_installed" == true ]]; then
+            log_debug "Font $cask_name appears to be already installed (found font files)"
+            return 0
+        fi
+    fi
+    
+    log_info "Installing cask $cask_name..."
+    brew install --cask "$cask_name" || {
+        log_warn "Failed to install $cask_name, but continuing..."
+        return 0
+    }
 }
 
 # Create symlink for packages with different names

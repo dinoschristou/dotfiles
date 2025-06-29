@@ -13,7 +13,7 @@ install_essential_packages_for_system() {
     install_yay
 
     # Initialize package manager and install from config
-    source "$SCRIPT_DIR/utils/package-manager.sh"
+    source "$SCRIPT_DIR/scripts/utils/package-manager.sh"
     init_package_manager
     
     # Install packages from centralized configuration
@@ -53,7 +53,7 @@ install_yay() {
 
 # Install development tools (using common function)
 install_development_packages() {
-    source "$SCRIPT_DIR/utils/common-installers.sh"
+    source "$SCRIPT_DIR/scripts/utils/common-installers.sh"
     install_development_packages "Arch Linux"
 }
 

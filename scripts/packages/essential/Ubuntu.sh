@@ -77,7 +77,7 @@ add_repositories() {
 
 # Install development tools (using common function)
 install_development_packages() {
-    source "$SCRIPT_DIR/utils/common-installers.sh"
+    source "$SCRIPT_DIR/scripts/utils/common-installers.sh"
     install_development_packages "Ubuntu"
 }
 

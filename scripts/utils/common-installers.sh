@@ -8,7 +8,7 @@ install_development_packages() {
     log_step "Installing development packages for $platform_name"
 
     # Use centralized package configuration
-    source "$SCRIPT_DIR/utils/package-manager.sh"
+    source "$SCRIPT_DIR/scripts/utils/package-manager.sh"
     init_package_manager
     install_development_packages_from_config
 
@@ -21,7 +21,7 @@ install_desktop_packages_centralized() {
     log_step "Installing desktop environment packages for $platform_name"
 
     # Use centralized package configuration
-    source "$SCRIPT_DIR/utils/package-manager.sh"
+    source "$SCRIPT_DIR/scripts/utils/package-manager.sh"
     init_package_manager
     install_desktop_packages_from_config
 
@@ -34,7 +34,7 @@ install_essential_packages_centralized() {
     log_step "Installing essential packages for $platform_name"
 
     # Use centralized package configuration
-    source "$SCRIPT_DIR/utils/package-manager.sh"
+    source "$SCRIPT_DIR/scripts/utils/package-manager.sh"
     init_package_manager
     install_essential_packages_from_config
 
