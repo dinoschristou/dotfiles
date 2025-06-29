@@ -173,7 +173,7 @@ jobs:
         grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" config/fastfetch/config.jsonc
         
         echo "Checking Tmux theme..."
-        grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" tmux.conf
+        grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" config/tmux/tmux.conf
         
         echo "Checking Sway theme..."
         grep -q "$BASE_COLOR\|$TEXT_COLOR\|$BLUE_COLOR" config/sway/catppuccin-macchiato.conf

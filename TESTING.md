@@ -147,7 +147,7 @@ This document provides comprehensive testing strategies for the dotfiles framewo
 - [ ] Dry-run shows expected packages
 - [ ] Installation completes without errors
 - [ ] `~/.zshrc` is properly symlinked
-- [ ] `~/.tmux.conf` is properly symlinked
+- [ ] `~/.config/tmux/tmux.conf` is properly symlinked
 - [ ] Powerlevel10k is installed in `~/powerlevel10k/`
 - [ ] Lazygit config is linked to `~/.config/lazygit/config.yml`
 - [ ] Fastfetch config is linked to `~/.config/fastfetch/config.jsonc`

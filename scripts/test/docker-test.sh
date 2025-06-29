@@ -21,7 +21,7 @@ DISTRIBUTIONS=(
     "ubuntu:22.04"
     "ubuntu:20.04"
     "debian:bullseye"
-    "archlinux/archlinux:latest"
+    "archlinux:latest"
     "fedora:38"
 )
 

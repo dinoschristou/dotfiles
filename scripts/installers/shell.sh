@@ -49,7 +49,8 @@ deploy_zsh_config() {
     create_symlink "$DOTFILES_DIR/p10k.zsh" "$HOME/.p10k.zsh"
     
     # Tmux configuration
-    create_symlink "$DOTFILES_DIR/tmux.conf" "$HOME/.tmux.conf"
+    mkdir -p "$HOME/.config/tmux"
+    create_symlink "$DOTFILES_DIR/config/tmux/tmux.conf" "$HOME/.config/tmux/tmux.conf"
     
     # Lazygit configuration
     mkdir -p "$HOME/.config/lazygit"
