@@ -110,7 +110,7 @@ shell_enhancements:
   
   zsh-syntax-highlighting:
     macos: zsh-fast-syntax-highlighting
-    arch: zsh-fast-syntax-highlighting-git  # AUR package
+    arch: zsh-fast-syntax-highlighting  # AUR package
     
 completion:
   bash-completion:

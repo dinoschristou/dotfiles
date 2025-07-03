@@ -33,7 +33,13 @@ install_yq() {
             fi
             ;;
         "Arch")
-            sudo pacman -S --noconfirm yq
+            # Try yay first, fallback to manual installation
+            if command_exists "yay"; then
+                yay -S --noconfirm yq || install_yq_binary
+            else
+                log_warn "yay not available, installing yq binary manually"
+                install_yq_binary
+            fi
             ;;
         "Fedora")
             sudo dnf install -y yq

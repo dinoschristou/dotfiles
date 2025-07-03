@@ -35,3 +35,7 @@ if [ -f '/Users/dinos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dinos/goo
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/dinos/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dinos/google-cloud-sdk/completion.zsh.inc'; fi
+
+if uwsm check may-start && uwsm select; then
+	exec uwsm start default
+fi

@@ -1,0 +1,21 @@
+FROM --platform=linux/amd64 archlinux:latest
+
+# Install basic dependencies
+RUN pacman -Sy --noconfirm sudo curl wget git ca-certificates unzip zip tar base-devel
+
+# Create test user
+RUN useradd -m -s /bin/bash testuser && \
+    echo 'testuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Set up working directory
+WORKDIR /home/testuser
+USER testuser
+
+# Copy dotfiles
+COPY --chown=testuser:testuser . /home/testuser/dotfiles/
+
+# Set working directory to dotfiles
+WORKDIR /home/testuser/dotfiles
+
+# Default command
+CMD ["/bin/bash"]

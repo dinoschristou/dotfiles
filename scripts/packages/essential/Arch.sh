@@ -9,6 +9,10 @@ install_essential_packages_for_system() {
     log_info "Updating system packages..."
     sudo pacman -Syu --noconfirm
 
+    # Install prerequisites for AUR operations
+    log_info "Installing prerequisites for AUR operations..."
+    sudo pacman -S --noconfirm base-devel git
+
     # Install yay AUR helper if not present
     install_yay
 
