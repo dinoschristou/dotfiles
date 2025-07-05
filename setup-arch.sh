@@ -93,7 +93,7 @@ cd /tmp
 curl -fLo "JetBrainsMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip
 curl -fLo "FiraCode.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip
 curl -fLo "CascadiaMono.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaMono.zip
-curl -fLo "iAWriter.zip" https://github.com/ryanoasis/nerd-fonts/releases/latest/download/iAWriter.zip
+curl -fLo "iAWriter.zip" https://github.com/iaolo/iA-Fonts/archive/refs/heads/master.zip
 unzip -o JetBrainsMono.zip -d ~/.local/share/fonts/
 unzip -o FiraCode.zip -d ~/.local/share/fonts/
 unzip -o CascadiaMono.zip -d ~/.local/share/fonts/
