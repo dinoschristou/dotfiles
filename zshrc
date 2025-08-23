@@ -30,6 +30,8 @@ source_if_exists "$ZSH_CONFIG_DIR/aliases.zsh"
 # User-specific overrides (maintain backward compatibility)
 source_if_exists ~/.work_shell      # Work-specific customizations
 source_if_exists ~/.host_shell      # Host-specific customizations
+source_if_exists ~/.env             # Mostly API Keys
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/dinos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dinos/google-cloud-sdk/path.zsh.inc'; fi
 
