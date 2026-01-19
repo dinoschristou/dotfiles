@@ -9,6 +9,9 @@ export PATH="$HOME/.local/bin:$PATH"
 PATH=/usr/local/go/bin:$PATH
 export PATH="~/go/bin:$PATH"
 
+# Antigravity CLI
+export PATH="~/.antigravity/antigravity/bin:$PATH"
+
 # Infrastructure environment variables
 export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
 export KUBECONFIG=~/.kube/config
