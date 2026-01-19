@@ -20,6 +20,7 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Shell configs
 ln -sf "$DOTFILES_DIR/zshrc" ~/.zshrc
 ln -sf "$DOTFILES_DIR/vimrc" ~/.vimrc
+ln -sf "$DOTFILES_DIR/p10k.zsh" ~/.p10k.zsh
 ln -sf "$DOTFILES_DIR/gitconfig" ~/.gitconfig
 ln -sf "$DOTFILES_DIR/tmux.conf" ~/.tmux.conf
 
