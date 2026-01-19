@@ -3,6 +3,7 @@
 # Base PATH setup
 PATH=/usr/local/bin:$PATH
 PATH=$HOME/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
 
 # Go development
 PATH=/usr/local/go/bin:$PATH

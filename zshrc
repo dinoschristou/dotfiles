@@ -31,6 +31,7 @@ source_if_exists "$ZSH_CONFIG_DIR/aliases.zsh"
 source_if_exists ~/.work_shell      # Work-specific customizations
 source_if_exists ~/.host_shell      # Host-specific customizations
 source_if_exists ~/.env             # Mostly API Keys
+source_if_exists $HOME/.atuin/bin/env
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/dinos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dinos/google-cloud-sdk/path.zsh.inc'; fi
@@ -38,3 +39,11 @@ if [ -f '/Users/dinos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dinos/goo
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/dinos/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dinos/google-cloud-sdk/completion.zsh.inc'; fi
 
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+
+# Added by Antigravity
+export PATH="/Users/dinos/.antigravity/antigravity/bin:$PATH"

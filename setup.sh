@@ -4,46 +4,47 @@ set -e
 
 echo "🚀 Setting up Arch Linux dotfiles..."
 
-# Update system
-echo "📦 Updating system packages..."
-sudo pacman -Syu --noconfirm
+# # Update system
+# echo "📦 Updating system packages..."
+# sudo pacman -Syu --noconfirm
 
-# Install essential packages
-echo "🔧 Installing essential packages..."
-sudo pacman -S --needed --noconfirm \
-    base-devel git curl wget \
-    zsh neovim vim \
-    kitty tmux \
-    hyprland hyprlock hypridle \
-    waybar wofi mako swaybg \
-    fastfetch btop lazygit \
-    fzf ripgrep fd \
-    nodejs npm \
-    python python-pip \
-    kubectl \
-    github-cli
+# # Install essential packages
+# echo "🔧 Installing essential packages..."
+# sudo pacman -S --needed --noconfirm \
+#     base-devel git curl wget \
+#     zsh neovim vim \
+#     kitty tmux \
+#     hyprland hyprlock hypridle \
+#     waybar wofi mako swaybg \
+#     fastfetch btop lazygit \
+#     fzf ripgrep fd \
+#     nodejs npm \
+#     python python-pip \
+#     kubectl \
+#     github-cli
 
-# Install AUR helper (yay)
-if ! command -v yay &> /dev/null; then
-    echo "🔨 Installing yay AUR helper..."
-    cd /tmp
-    git clone https://aur.archlinux.org/yay.git
-    cd yay
-    makepkg -si --noconfirm
-    cd ~
-fi
+# # Install AUR helper (yay)
+# if ! command -v yay &> /dev/null; then
+#     echo "🔨 Installing yay AUR helper..."
+#     cd /tmp
+#     git clone https://aur.archlinux.org/yay.git
+#     cd yay
+#     makepkg -si --noconfirm
+#     cd ~
+# fi
 
-# Install AUR packages
-echo "📦 Installing AUR packages..."
-yay -S --needed --noconfirm \
-    google-cloud-cli \
-    powerlevel10k-git \
-    zsh-autosuggestions \
-    zsh-fast-syntax-highlighting \
-    google-chrome \
-    visual-studio-code-bin \
-    1password \
-    obsidian
+# # Install AUR packages
+# echo "📦 Installing AUR packages..."
+# yay -S --needed --noconfirm \
+#     google-cloud-cli \
+#     powerlevel10k-git \
+#     zsh-autosuggestions \
+#     zsh-fast-syntax-highlighting \
+#     google-chrome \
+#     visual-studio-code-bin \
+#     1password \
+#     obsidian
+
 
 # Create necessary directories
 echo "📁 Creating directories..."
@@ -107,7 +108,6 @@ if [ ! -d ~/.vim/bundle/Vundle.vim ]; then
 fi
 vim +PluginInstall +qall
 
-echo "✅ Arch Linux setup complete!"
+echo "Setup complete!"
 echo ""
 echo "🔄 Please log out and log back in to complete the setup."
-echo "🎨 Your system is now configured with Catppuccin Macchiato theme!"
