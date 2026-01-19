@@ -14,6 +14,7 @@ zstyle ':vcs_info:*' enable git
 
 # Source Powerlevel10k if it is available
 [ -f "$HOME/powerlevel10k/powerlevel10k.zsh-theme" ] && source "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
+[ -f "$HOME/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme" ] && source "$HOME/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
