@@ -22,7 +22,6 @@ ln -sf "$DOTFILES_DIR/zshrc" ~/.zshrc
 ln -sf "$DOTFILES_DIR/vimrc" ~/.vimrc
 ln -sf "$DOTFILES_DIR/p10k.zsh" ~/.p10k.zsh
 ln -sf "$DOTFILES_DIR/gitconfig" ~/.gitconfig
-ln -sf "$DOTFILES_DIR/tmux.conf" ~/.tmux.conf
 
 # XDG configs
 ln -sf "$DOTFILES_DIR/config/nvim" ~/.config/
@@ -34,6 +33,7 @@ ln -sf "$DOTFILES_DIR/config/mako" ~/.config/
 ln -sf "$DOTFILES_DIR/config/btop" ~/.config/
 ln -sf "$DOTFILES_DIR/config/lazygit" ~/.config/
 ln -sf "$DOTFILES_DIR/config/fastfetch" ~/.config/
+ln -sf "$DOTFILES_DIR/config/tmux" ~/.config/
 ln -sf "$DOTFILES_DIR/config/zsh" ~/.config/
 
 # Local data
