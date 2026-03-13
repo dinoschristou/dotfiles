@@ -12,6 +12,9 @@ export PATH="~/go/bin:$PATH"
 # Antigravity CLI
 export PATH="~/.antigravity/antigravity/bin:$PATH"
 
+# Obsidian CLI
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
+
 # Infrastructure environment variables
 export SOPS_AGE_KEY_FILE=$HOME/.sops/key.txt
 export KUBECONFIG=~/.kube/config
