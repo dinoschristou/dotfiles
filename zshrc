@@ -38,3 +38,7 @@ if [ -f '/Users/dinos/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/dinos/goo
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/dinos/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/dinos/google-cloud-sdk/completion.zsh.inc'; fi
+
+if command -v atuin &>/dev/null; then
+  eval "$(atuin init zsh)"
+fi
