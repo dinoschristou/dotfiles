@@ -33,7 +33,8 @@ ln -sf "$DOTFILES_DIR/config/kitty" ~/.config/
 ln -sf "$DOTFILES_DIR/config/btop" ~/.config/
 ln -sf "$DOTFILES_DIR/config/lazygit" ~/.config/
 ln -sf "$DOTFILES_DIR/config/fastfetch" ~/.config/
-ln -sf "$DOTFILES_DIR/config/tmux" ~/.config/
+mkdir -p "~/.config/tmux"
+ln -sf "$DOTFILES_DIR/config/tmux/tmux.conf" ~/.config/tmux/tmux.conf
 ln -sf "$DOTFILES_DIR/config/zsh" ~/.config/
 
 # Change default shell to zsh
