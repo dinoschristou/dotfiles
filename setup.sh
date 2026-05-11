@@ -36,6 +36,7 @@ ln -sf "$DOTFILES_DIR/config/fastfetch" ~/.config/
 mkdir -p "~/.config/tmux"
 ln -sf "$DOTFILES_DIR/config/tmux/tmux.conf" ~/.config/tmux/tmux.conf
 ln -sf "$DOTFILES_DIR/config/zsh" ~/.config/
+ln -sf "$DOTFILES_DIR/config/ghostty" ~/.config/
 
 # Change default shell to zsh
 echo "Changing default shell to zsh..."
@@ -55,7 +56,7 @@ echo "Installing tmux plugins..."
 if [ ! -d ~/.tmux/plugins/tpm ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
-~/.tmux/plugins/tpm/scripts/install_plugins.sh
+#~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 # Install powerlevel10k
 echo "Installing Powerlevel10k..."

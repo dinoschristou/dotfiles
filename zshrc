@@ -42,3 +42,5 @@ if [ -f '/Users/dinos/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/din
 if command -v atuin &>/dev/null; then
   eval "$(atuin init zsh)"
 fi
+# Added by Antigravity
+export PATH="/Users/dinos/.antigravity/antigravity/bin:$PATH"

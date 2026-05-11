@@ -1,0 +1,9 @@
+font-family = FiraCode Nerd Font Mono
+font-size = 14
+
+theme = light:Catppuccin Latte,dark:Catppuccin Macchiato
+
+cursor-style = block
+cursor-style-blink = false
+
+working-directory = home
