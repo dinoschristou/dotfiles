@@ -5,7 +5,7 @@ autoload -Uz compinit
 compinit
 
 # 1Password completion
-if type op &>/dev/null; then
+if [[ -t 1 ]] && command -v op &>/dev/null; then
   eval "$(op completion zsh)"
   compdef _op op
 fi
