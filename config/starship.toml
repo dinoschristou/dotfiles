@@ -1,0 +1,99 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+command_timeout = 500
+scan_timeout = 30
+
+format = """
+$directory$git_branch$git_status$python$golang$rust$nodejs$kubernetes$battery$cmd_duration
+$character"""
+
+right_format = """$username$hostname"""
+
+[character]
+success_symbol = '[❯](bold #a6da95)'
+error_symbol = '[❯](bold #ed8796)'
+
+[directory]
+style = 'bold #8aadf4'
+truncation_length = 3
+truncate_to_repo = true
+read_only = '  󰌾'
+
+[git_branch]
+symbol = ' '
+style = 'bold #c6a0f6'
+truncation_length = 30
+format = 'on [$symbol$branch]($style) '
+
+[git_status]
+ignore_submodules = true
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+staged = '[✚](#a6da95)'
+modified = '[!](#eed49f)'
+untracked = '[?](#a5adcb)'
+deleted = '[✘](#ed8796)'
+stashed = '[≡](#8aadf4)'
+format = '([$all_status$ahead_behind]($style) )'
+style = '#eed49f'
+
+[cmd_duration]
+min_time = 2000
+format = '[󱎫 $duration](#eed49f) '
+
+[battery]
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂃 '
+format = '[$symbol$percentage]($style) '
+[[battery.display]]
+threshold = 20
+style = 'bold #ed8796'
+[[battery.display]]
+threshold = 50
+style = '#eed49f'
+
+[username]
+show_always = true
+style_user = 'bold #b7bdf8'
+style_root = 'bold #ed8796'
+format = '[$user]($style)[@](#a5adcb)[](bold #8aadf4)'
+
+[hostname]
+ssh_only = false
+trim_at = '.'
+format = '[$hostname](bold #8aadf4)'
+
+[python]
+symbol = '󰌠  '
+format = 'via [$symbol$virtualenv]($style) '
+style = '#eed49f'
+detect_extensions = ['py']
+
+[golang]
+symbol = '󰟓  '
+style = '#8bd5ca'
+
+[rust]
+symbol = '󱘗  '
+style = '#f5a97f'
+
+[nodejs]
+symbol = '  '
+style = '#a6da95'
+
+[kubernetes]
+disabled = false
+symbol = '󱃾  '
+style = 'bold #8bd5ca'
+format = 'on [$symbol$context( \($namespace\))]($style) '
+
+[docker_context]
+symbol = '󰡨  '
+style = 'bold #8aadf4'
+only_with_files = true
+
+[package]
+disabled = true

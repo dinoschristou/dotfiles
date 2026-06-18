@@ -1,127 +1,96 @@
--- LazyVim configuration with Catppuccin Macchiato theme
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+  vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable',
+    'https://github.com/folke/lazy.nvim.git', lazypath }
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.mapleader = ' '
+vim.g.maplocalleader = '\\'
 
--- Setup lazy.nvim
-require("lazy").setup({
-  spec = {
-    -- Import LazyVim and its plugins
-    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- Import extra plugins
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-    { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.python" },
-    { import = "lazyvim.plugins.extras.lang.rust" },
-    { import = "lazyvim.plugins.extras.lang.go" },
-    { import = "lazyvim.plugins.extras.lang.docker" },
-    { import = "lazyvim.plugins.extras.lang.yaml" },
-    { import = "lazyvim.plugins.extras.lang.markdown" },
-    { import = "lazyvim.plugins.extras.coding.copilot" },
-    { import = "lazyvim.plugins.extras.editor.leap" },
-    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-    
-    -- Catppuccin theme
-    {
-      "catppuccin/nvim",
-      name = "catppuccin",
-      priority = 1000,
-      opts = {
-        flavour = "macchiato", -- latte, frappe, macchiato, mocha
-        background = { -- :h background
-          light = "latte",
-          dark = "macchiato",
-        },
-        transparent_background = false, -- disables setting the background color.
-        show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-        term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
-        dim_inactive = {
-          enabled = false, -- dims the background color of inactive window
-          shade = "dark",
-          percentage = 0.15, -- percentage of the shade to apply to the inactive window
-        },
-        no_italic = false, -- Force no italic
-        no_bold = false, -- Force no bold
-        no_underline = false, -- Force no underline
-        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
-          comments = { "italic" }, -- Change the style of comments
-          conditionals = { "italic" },
-          loops = {},
-          functions = {},
-          keywords = {},
-          strings = {},
-          variables = {},
-          numbers = {},
-          booleans = {},
-          properties = {},
-          types = {},
-          operators = {},
-        },
-        color_overrides = {},
-        custom_highlights = {},
-        integrations = {
-          cmp = true,
-          gitsigns = true,
-          nvimtree = true,
-          treesitter = true,
-          notify = false,
-          mini = {
-            enabled = true,
-            indentscope_color = "",
-          },
-          -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
-        },
-      },
+require('lazy').setup({
+  { 'catppuccin/nvim', name = 'catppuccin', priority = 1000,
+    opts = { flavour = 'macchiato' } },
+
+  { 'nvim-telescope/telescope.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    keys = {
+      { '<leader>ff', '<cmd>Telescope find_files<cr>' },
+      { '<leader>fg', '<cmd>Telescope live_grep<cr>' },
+      { '<leader>fb', '<cmd>Telescope buffers<cr>' },
     },
-    
-    -- Import any additional local plugins
-    { import = "plugins" },
   },
-  defaults = {
-    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+
+  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate',
     lazy = false,
-    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-    -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    config = function()
+      local ok, configs = pcall(require, 'nvim-treesitter.configs')
+      if not ok then return end
+      configs.setup {
+        highlight = { enable = true },
+        indent   = { enable = true },
+      }
+    end,
   },
-  install = { colorscheme = { "catppuccin", "habamax" } },
-  checker = { enabled = true }, -- automatically check for plugin updates
-  performance = {
-    rtp = {
-      -- disable some rtp plugins
-      disabled_plugins = {
-        "gzip",
-        -- "matchit",
-        -- "matchparen",
-        -- "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
-      },
-    },
-  },
+
+  { 'nvim-lualine/lualine.nvim',
+    opts = { options = { theme = 'catppuccin-macchiato' } } },
+
+  { 'lewis6991/gitsigns.nvim', opts = {} },
+
+  'tpope/vim-commentary',
+  'tpope/vim-surround',
+  'tpope/vim-fugitive',
+}, {
+  install = { colorscheme = { 'catppuccin', 'habamax' } },
+  checker = { enabled = false },
 })
 
--- Set colorscheme
-vim.cmd.colorscheme("catppuccin-macchiato")
+vim.cmd.colorscheme 'catppuccin-macchiato'
+
+local o = vim.opt
+o.number         = true
+o.relativenumber = true
+o.cursorline     = true
+o.scrolloff      = 8
+o.sidescrolloff  = 8
+o.signcolumn     = 'yes'
+o.termguicolors  = true
+o.wrap           = false
+o.expandtab      = true
+o.shiftwidth     = 2
+o.tabstop        = 2
+o.softtabstop    = 2
+o.smartindent    = true
+o.ignorecase     = true
+o.smartcase      = true
+o.hlsearch       = true
+o.clipboard      = 'unnamedplus'
+o.undofile       = true
+o.hidden         = true
+o.mouse          = 'a'
+
+local map = vim.keymap.set
+map('n', '<leader>/',  '<cmd>nohlsearch<cr>')
+map('n', '<leader>w',  '<cmd>w<cr>')
+map('n', '<leader>q',  '<cmd>q<cr>')
+map('n', '<C-h>', '<C-w>h')
+map('n', '<C-j>', '<C-w>j')
+map('n', '<C-k>', '<C-w>k')
+map('n', '<C-l>', '<C-w>l')
+map('n', '<leader>bn', '<cmd>bnext<cr>')
+map('n', '<leader>bp', '<cmd>bprevious<cr>')
+map('n', '<leader>bd', '<cmd>bdelete<cr>')
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'javascript', 'typescript', 'json', 'html', 'css', 'yaml', 'lua' },
+  callback = function() vim.opt_local.shiftwidth = 2; vim.opt_local.tabstop = 2 end,
+})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  callback = function()
+    vim.opt_local.expandtab = false
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
+  end,
+})

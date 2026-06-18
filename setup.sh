@@ -24,18 +24,16 @@ ln -sf "$DOTFILES_DIR/bin" ~/
 # Shell configs
 ln -sf "$DOTFILES_DIR/zshrc" ~/.zshrc
 ln -sf "$DOTFILES_DIR/vimrc" ~/.vimrc
-ln -sf "$DOTFILES_DIR/p10k.zsh" ~/.p10k.zsh
 ln -sf "$DOTFILES_DIR/gitconfig" ~/.gitconfig
 
 # Configs for applications
 ln -sf "$DOTFILES_DIR/config/nvim" ~/.config/
-ln -sf "$DOTFILES_DIR/config/kitty" ~/.config/
 ln -sf "$DOTFILES_DIR/config/btop" ~/.config/
-ln -sf "$DOTFILES_DIR/config/lazygit" ~/.config/
 ln -sf "$DOTFILES_DIR/config/fastfetch" ~/.config/
+ln -sf "$DOTFILES_DIR/config/starship.toml" ~/.config/starship.toml
+
 mkdir -p "~/.config/tmux"
 ln -sf "$DOTFILES_DIR/config/tmux/tmux.conf" ~/.config/tmux/tmux.conf
-ln -sf "$DOTFILES_DIR/config/zsh" ~/.config/
 ln -sf "$DOTFILES_DIR/config/ghostty" ~/.config/
 
 # Change default shell to zsh
@@ -57,12 +55,6 @@ if [ ! -d ~/.tmux/plugins/tpm ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 #~/.tmux/plugins/tpm/scripts/install_plugins.sh
-
-# Install powerlevel10k
-echo "Installing Powerlevel10k..."
-if [ ! -d ~/powerlevel10k ]; then
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
-fi
 
 echo "Setup complete!"
 echo ""
